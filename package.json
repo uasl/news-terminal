@@ -8,13 +8,17 @@
     "start": "next start",
     "lint": "next lint"
   },
-"dependencies": {
+  "dependencies": {
     "@mozilla/readability": "^0.4.4",
     "@tailwindcss/typography": "^0.5.10",
+    "dompurify": "^3.0.6",
     "isomorphic-dompurify": "^2.6.0",
     "jsdom": "^22.1.0",
+    "next": "14.0.4",
     "openai": "^4.24.1",
-    "rss-parser": "^3.13.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "rss-parser": "^3.13.0"
   },
   "devDependencies": {
     "@types/dompurify": "^3.0.5",
