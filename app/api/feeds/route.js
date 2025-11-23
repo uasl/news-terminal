@@ -1,5 +1,5 @@
 import Parser from 'rss-parser';
-import { sources } from '@/lib/sources';
+import { sources } from '../lib/sources';
 import { NextResponse } from 'next/server';
 
 export const revalidate = 0;
