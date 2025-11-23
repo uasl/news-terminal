@@ -130,8 +130,6 @@ export default function Home() {
       
       {/* SOL LİSTE */}
       <aside className="flex-1 min-w-0 flex flex-col border-r border-gray-200 bg-white z-10 relative md:w-[55%] lg:w-[60%]">
-        
-        {/* HEADER */}
         <div className="px-6 py-5 border-b border-gray-100 bg-white/95 backdrop-blur z-20">
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-xl font-black tracking-tight uppercase">The Feed.</h1>
@@ -171,7 +169,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* LİSTE */}
         <div className="flex-1 overflow-y-auto">
           {loading ? (
              <div className="p-10 text-center text-gray-300 animate-pulse font-mono text-xs">SYNCING FEED...</div>
@@ -182,12 +179,7 @@ export default function Home() {
               {displayedNews.map((item, idx) => {
                 const isActive = readingArticle?.link === item.link;
                 return (
-                  <article 
-                    key={idx} 
-                    onClick={() => startStreaming(item)} 
-                    className={`px-6 py-5 cursor-pointer transition-all hover:bg-gray-50`} // Görsel kaldırıldı, flex gap kaldırıldı
-                  >
-                    
+                  <article key={idx} onClick={() => startStreaming(item)} className={`px-6 py-5 cursor-pointer transition-all hover:bg-gray-50 flex gap-4 ${isActive ? 'bg-blue-50/40' : ''}`}>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-2">
                         <span className={`shrink-0 px-1.5 py-0.5 rounded text-[9px] font-black uppercase tracking-widest border ${getCategoryColor(item.category)}`}>{item.category}</span>

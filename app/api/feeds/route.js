@@ -1,18 +1,13 @@
 import Parser from 'rss-parser';
-import { sources } from '../lib/sources';
+import { sources } from '../../../lib/sources'; // <-- KESİN YOL (3 seviye yukarı çıkıyor)
 import { NextResponse } from 'next/server';
 
 export const revalidate = 0;
 
 export async function GET(request) {
-  // Özel alanları (media:content, enclosure) tanıyacak şekilde parser'ı ayarlıyoruz
   const parser = new Parser({
     customFields: {
-      item: [
-        ['media:content', 'mediaContent'],
-        ['enclosure', 'enclosure'],
-        ['image', 'image'],
-      ],
+      item: [['media:content', 'mediaContent'], ['enclosure', 'enclosure'], ['image', 'image']],
     },
   });
 
@@ -34,21 +29,7 @@ export async function GET(request) {
     try {
       const feed = await parser.parseURL(source.url);
       return feed.items.map(item => {
-        // RESİM BULMA MANTIĞI
-        let imageUrl = null;
-        
-        // 1. Enclosure var mı?
-        if (item.enclosure && item.enclosure.url) {
-          imageUrl = item.enclosure.url;
-        } 
-        // 2. Media Content var mı?
-        else if (item.mediaContent && item.mediaContent['$'] && item.mediaContent['$'].url) {
-          imageUrl = item.mediaContent['$'].url;
-        }
-        // 3. Bazı feedlerde direkt 'image' tagi olabilir
-        else if (item.image) {
-            imageUrl = item.image;
-        }
+        let imageUrl = item.enclosure?.url || item['media:content']?.$.url || item.image || null;
 
         return {
           title: item.title,
@@ -56,7 +37,7 @@ export async function GET(request) {
           pubDate: item.pubDate,
           snippet: item.contentSnippet || item.content,
           source: source.name,
-          img: imageUrl, // Resmi buraya ekledik
+          img: imageUrl, 
           category: source.category,
           region: source.region
         };
